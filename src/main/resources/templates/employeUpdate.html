@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Employé</title>
+
+    <link rel="stylesheet" href="/css/bootstrap1.min.css" />
+
+    <link rel="stylesheet" href="/vendors/themefy_icon/themify-icons.css" />
+
+    <link rel="stylesheet" href="/vendors/swiper_slider/css/swiper.min.css" />
+
+    <link rel="stylesheet" href="/vendors/select2/css/select2.min.css" />
+
+    <link rel="stylesheet" href="/vendors/niceselect/css/nice-select.css" />
+
+    <link rel="stylesheet" href="/vendors/owl_carousel/css/owl.carousel.css" />
+
+    <link rel="stylesheet" href="/vendors/gijgo/gijgo.min.css" />
+
+    <link rel="stylesheet" href="/vendors/font_awesome/css/all.min.css" />
+    <link rel="stylesheet" href="/vendors/tagsinput/tagsinput.css" />
+
+    <link rel="stylesheet" href="/vendors/datatable/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="/vendors/datatable/css/responsive.dataTables.min.css" />
+    <link rel="stylesheet" href="/vendors/datatable/css/buttons.dataTables.min.css" />
+
+    <link rel="stylesheet" href="/vendors/text_editor/summernote-bs4.css" />
+
+    <link rel="stylesheet" href="/vendors/morris/morris.css">
+
+    <link rel="stylesheet" href="/vendors/material_icon/material-icons.css" />
+    <link href="/css/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+
+    <link rel="stylesheet" href="/css/style1.css" />
+</head>
+
+<body class="crm_body_bg">
+
+
+
+<nav class="sidebar" style="background-color: white;	font-family: 'Poppins', sans-serif;
+    " >
+    <div class="logo d-flex justify-content-between">
+
+        <h3><span class="text-primary">First</span>Bank</h3>
+
+        <div class="sidebar_close_icon d-lg-none">
+            <i class="ti-close"></i>
+        </div>
+    </div>
+    <ul id="sidebar_menu">
+        <li class="">
+            <a  th:href="@{dashboard}" aria-expanded="false">
+
+                <i class="bi bi-house-door"></i> <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="" sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet')">
+            <a  th:href="@{compte}" aria-expanded="false">
+
+                <i class="bi bi-piggy-bank"></i> <span>Compte</span>
+            </a>
+        </li>
+        <li class="">
+            <a  th:href="@{clients}" aria-expanded="false" sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet', 'Caissier')">
+
+                <i class="bi bi-person-up"></i> <span>Clients</span>
+            </a>
+        </li>
+        <li class="" sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet')">
+            <a  th:href="@{employes}" aria-expanded="false">
+
+                <i class="bi bi-person-fill-gear"></i> <span>Employés</span>
+            </a>
+        </li>
+        <li class="" sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet', 'Caissier')">
+            <a th:href="@{/operations}" aria-expanded="false">
+
+                <i class="bi bi-gear"></i>
+                <span></i>Opérations</span>
+            </a>
+        </li>
+        <li sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet')">
+            <a th:href="@{virement}"><i class="bi bi-currency-euro"></i>
+                Virement
+            </a>
+        </li>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/logout}"><i class="bi bi-power" style="color: red"></i>Logout</a>
+        </li>
+    </ul>
+</nav>
+
+
+<section class="main_content dashboard_part">
+
+    <div class="container-fluid g-0">
+        <div class="row">
+            <div class="col-lg-12 p-0">
+                <div class="header_iner d-flex justify-content-between align-items-center">
+                    <div class="sidebar_icon d-lg-none">
+                        <i class="ti-menu"></i>
+                    </div>
+                    <div class="serach_field-area">
+                        <div class="search_inner">
+                            <form action="#">
+                                <div class="search_field">
+                                    <input type="text" placeholder="Faites une recherche...">
+                                </div>
+                                <button type="submit"> <i class="bi bi-search"></i> </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="header_right d-flex justify-content-between align-items-center">
+                        <div class="profile_info">
+                            <div class="elinor">
+                                <h5 sec:authorize="isAuthenticated()"><span sec:authentication="name"></span></h5>
+                                <img src="/img/client_img.png" alt="#">
+                            </div>
+                            <div class="profile_info_iner">
+                                <p>Bienvenue !</p>
+                                <h5 sec:authorize="isAuthenticated()"><span sec:authentication="name"></span></h5>
+                                <div class="profile_info_details">
+                                    <a th:href="@{reglage}"> Réglages<i class="bi bi-person-circle"></i></a>
+                                        <a th:href="@{/logout}">Se Déconnecter <i class="ti-shift-left"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="main_content_iner  col-6 " style="
+        margin-left: auto;
+        margin-right: auto;">
+            <div class="container-fluid plr_30 body_white_bg pt_30">
+                <div class="row justify-content-center">
+                    <div class="col-8">
+                        <h2 class="card-title" style="text-align: center;" >Modifier un Employé</h2>
+
+                            <div class="card-body p-4 p-sm-5">
+                              <form th:object="${employee}" th:action="@{/saveEmployee}" th:method="post">
+                                  <input type="text" th:field="${employee.matricule}" hidden>
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Nom </label>
+                                  <input type="text" class="form-control" id="name" th:field="${employee.nom}">
+                                </div> <br>
+                                <div class="form-group">
+                                  <label for="exampleInputPassword1">Prénom</label>
+                                  <input type="text" class="form-control" id="surname" th:field="${employee.prenom}">
+                                </div><br>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Email</label>
+                                    <input type="email" class="form-control" id="email" th:field="${employee.email}">
+                                  </div>
+                                  <div class="mb-3">
+                                      <label for="recipient-name" class="col-form-label">Role</label>
+                                      <select class="form-select" aria-label=".form-select-lg example" th:field="${employee.role}">
+                                          <option th:value="Caissier" selected>Caissier</option>
+                                          <option th:value="Admin">Administrateur</option>
+                                          <!--<option th:text="${client.nom}"></option>-->
+                                      </select>
+                                  </div>
+<!--                                  <div class="form-group">-->
+<!--                                      <label for="exampleInputPassword1">Email</label>-->
+<!--                                      <input type="" class="form-control" id="password" th:field="${employee.password}">-->
+<!--                                  </div>-->
+                                  <input type="text" class="form-control" id="password" th:field="${employee.password}" hidden>
+                                    <br><br>
+                               
+                                <button type="submit" style="text-align: center;" class="btn btn-primary"><i class="bi bi-save"></i>
+                                        Enregistrer
+                                </button>
+                                  <button type="submit" style="text-align: center;" class="btn btn-danger">
+                                      <a th:href="@{/employes}" style="color: white">
+                                          Annuler
+                                      </a>
+                                  </button>
+                              </form>
+                           </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+
+        <div class="footer_part"  style="background-color: black; ">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="footer_iner text-center">
+                            <p class="text-white" style="font-family: 'Poppins', sans-serif;">Tous droits réservés par <span class="text-primary">First</span>Bank</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+script src="/js/jquery1-3.4.1.min.js"></script>
+
+<script src="/js/popper1.min.js"></script>
+
+<script src="/js/bootstrap1.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+
+
+<script src="/js/metisMenu.js"></script>
+
+<script src="/vendors/count_up/jquery.waypoints.min.js"></script>
+
+<script src="/vendors/chartlist/Chart.min.js"></script>
+
+<script src="/vendors/count_up/jquery.counterup.min.js"></script>
+
+<script src="/vendors/swiper_slider/js/swiper.min.js"></script>
+
+<script src="/vendors/niceselect/js/jquery.nice-select.min.js"></script>
+
+<script src="/vendors/owl_carousel/js/owl.carousel.min.js"></script>
+
+<script src="/vendors/gijgo/gijgo.min.js"></script>
+
+<script src="/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="/vendors/datatable/js/dataTables.responsive.min.js"></script>
+<script src="/vendors/datatable/js/dataTables.buttons.min.js"></script>
+<script src="/vendors/datatable/js/buttons.flash.min.js"></script>
+<script src="/vendors/datatable/js/jszip.min.js"></script>
+<script src="/vendors/datatable/js/pdfmake.min.js"></script>
+<script src="/vendors/datatable/js/vfs_fonts.js"></script>
+<script src="/vendors/datatable/js/buttons.html5.min.js"></script>
+<script src="/vendors/datatable/js/buttons.print.min.js"></script>
+<script src="/js/chart.min.js"></script>
+
+<script src="/vendors/progressbar/jquery.barfiller.js"></script>
+
+<script src="/vendors/tagsinput/tagsinput.js"></script>
+
+<script src="/vendors/text_editor/summernote-bs4.js"></script>
+<script src="/vendors/apex_chart/apexcharts.js"></script>
+<script src="/js/custom.js"></script>
+<script src="/js/active_chart.js"></script>
+<script src="/vendors/apex_chart/radial_active.js"></script>
+<script src="/vendors/apex_chart/stackbar.js"></script>
+<script src="/vendors/apex_chart/area_chart.js"></script>
+<script src="/vendors/apex_chart/bar_active_1.js"></script>
+<script src="/vendors/chartjs/chartjs_active.js"></script>
+
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+
+<script type="text/javascript">
+
+    function testAlertDialog()  {
+
+         alert("Voulez-vous vraiment Supprimer ?");
+    }
+
+ </script>
+
+    
+
+
+
+  
+      
+
+</body>
+
+
+</html>

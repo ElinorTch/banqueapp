@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="/css/bootstrap1.min.css" />
+
+    <link rel="stylesheet" href="/vendors/themefy_icon/themify-icons.css" />
+
+    <link rel="stylesheet" href="/vendors/swiper_slider/css/swiper.min.css" />
+
+    <link rel="stylesheet" href="/vendors/select2/css/select2.min.css" />
+
+    <link rel="stylesheet" href="/vendors/niceselect/css/nice-select.css" />
+
+    <link rel="stylesheet" href="/vendors/owl_carousel/css/owl.carousel.css" />
+
+    <link rel="stylesheet" href="/vendors/gijgo/gijgo.min.css" />
+
+    <link rel="stylesheet" href="/vendors/font_awesome/css/all.min.css" />
+    <link rel="stylesheet" href="/vendors/tagsinput/tagsinput.css" />
+
+    <link rel="stylesheet" href="/vendors/datatable/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="/vendors/datatable/css/responsive.dataTables.min.css" />
+    <link rel="stylesheet" href="/vendors/datatable/css/buttons.dataTables.min.css" />
+
+    <link rel="stylesheet" href="/vendors/text_editor/summernote-bs4.css" />
+
+    <link rel="stylesheet" href="/vendors/morris/morris.css">
+
+    <link rel="stylesheet" href="/vendors/material_icon/material-icons.css" />
+    <link href="/css/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+
+    <link rel="stylesheet" href="/css/style1.css" />
+</head>
+
+<body class="crm_body_bg">
+
+
+
+<nav class="sidebar" style="background-color: white;	font-family: 'Poppins', sans-serif;
+    " >
+    <div class="logo d-flex justify-content-between">
+
+        <h3><span class="text-primary">First</span>Bank</h3>
+
+        <div class="sidebar_close_icon d-lg-none">
+            <i class="ti-close"></i>
+        </div>
+    </div>
+    <ul id="sidebar_menu">
+        <li class="">
+            <a  th:href="@{dashboard}" aria-expanded="false">
+
+                <i class="bi bi-house-door"></i> <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="" sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet')">
+            <a  th:href="@{compte}" aria-expanded="false">
+
+                <i class="bi bi-piggy-bank"></i> <span>Compte</span>
+            </a>
+        </li>
+        <li class="">
+            <a  th:href="@{clients}" aria-expanded="false" sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet', 'Caissier')">
+
+                <i class="bi bi-person-up"></i> <span>Clients</span>
+            </a>
+        </li>
+        <li class="" sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet')">
+            <a  th:href="@{employes}" aria-expanded="false">
+
+                <i class="bi bi-person-fill-gear"></i> <span>Employés</span>
+            </a>
+        </li>
+        <li class="" sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet', 'Caissier')">
+            <a th:href="@{/operations}" aria-expanded="false">
+
+                <i class="bi bi-gear"></i>
+                <span></i>Opérations</span>
+            </a>
+        </li>
+        <li sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet')">
+            <a th:href="@{virement}"><i class="bi bi-currency-euro"></i>
+                Virement
+            </a>
+        </li>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/logout}"><i class="bi bi-power" style="color: red"></i>Logout</a>
+        </li>
+    </ul>
+</nav>
+
+
+<section class="main_content dashboard_part">
+
+    <div class="container-fluid g-0">
+        <div class="row">
+            <div class="col-lg-12 p-0">
+                <div class="header_iner d-flex justify-content-between align-items-center">
+                    <div class="sidebar_icon d-lg-none">
+                        <i class="ti-menu"></i>
+                    </div>
+                    <div class="serach_field-area">
+                        <div class="search_inner">
+                            <form action="#">
+                                <div class="search_field">
+                                    <input type="text" placeholder="Faites une recherche...">
+                                </div>
+                                <button type="submit"> <i class="bi bi-search"></i> </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="header_right d-flex justify-content-between align-items-center">
+                        <div class="profile_info">
+                            <div class="elinor">
+                                <h5 sec:authorize="isAuthenticated()"><span sec:authentication="name"></span></h5>
+                                <img src="/img/client_img.png" alt="#">
+                            </div>
+                            <div class="profile_info_iner">
+                                <p>Bienvenue !</p>
+                                <h5 sec:authorize="isAuthenticated()"><span sec:authentication="name"></span></h5>
+                                <div class="profile_info_details">
+                                    <a th:href="@{reglage}"> Réglages<i class="bi bi-person-circle"></i></a>
+                                        <a th:href="@{/logout}">Se Déconnecter <i class="ti-shift-left"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="main_content_iner ">
+            <div class="container-fluid plr_30 body_white_bg pt_30">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="QA_section">
+                            <div class="white_box_tittle list_header">
+                                <h4>Clients</h4>
+                                <button type="button" class="btn btn-ligth "
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal" sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet')">
+                                    <i class="ti ti-export mx-1"></i> Ajouter un Client
+                                </button>
+                                <div class="box_right d-flex lms_block">
+                                </div>
+
+                            </div>
+                            <div class="QA_table ">
+
+                                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr style="color: black;">
+                                            <th scope="col">Nom</th>
+                                            <th scope="col">Prenom</th>
+                                            <th scope="col">email</th>
+                                            <th scope="col">Numero</th>
+                                            <th class="col" scope="col" style="text-align: center;" sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet')">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="client : ${clientList}">
+                                            <td th:text="${client.nom}"></td>
+                                            <td th:text="${client.prenom}"></td>
+                                            <td th:text="${client.email}"></td>
+                                            <td th:text="${client.numero}"></td>
+                                            <td class="col"  sec:authorize="hasAnyAuthority('ChefAgence', 'ChefGuichet')">
+                                                <center>
+                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                        <button type="button" class="btn btn-ligth text-primary"
+                                                            data-toggle="tooltip" data-placement="top" title="Modifier">
+                                                            <a th:href="@{'/updateClient/' + ${client.code}}">
+                                                                <i class=" ti ti-pencil"></i>
+                                                            </a>
+                                                        </button>
+                                                        <button button type="button" data-bs-target="#exampleModal1"
+                                                                data-bs-toggle="modal" class="btn  btn-ligth text-danger"
+                                                            title="Supprimer">
+
+                                                                <i class="ti ti-trash"></i>
+
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body" style="text-align: center;">
+                                                                    <h3>Voulez-vous vraiment supprimer?</h3>
+                                                                </div>
+                                                                <div class="modal-footer" style="margin-left: auto; margin-right: auto;">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                                                    <button type="submit" class="btn btn-danger">
+                                                                        <a th:href="@{'deleteClient/' + ${client.code}}" style="text-decoration: none; color: white">
+                                                                            Oui
+                                                                        </a>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="footer_part" style="background-color: black; ">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="footer_iner text-center">
+                            <p class="text-white" style="font-family: 'Poppins', sans-serif;">Tous droits réservés par
+                                <span class="text-primary">First</span>Bank</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+<script src="/js/jquery1-3.4.1.min.js"></script>
+
+<script src="/js/popper1.min.js"></script>
+
+<script src="/js/bootstrap1.min.js"></script>
+
+<script src="/js/metisMenu.js"></script>
+
+<script src="/vendors/count_up/jquery.waypoints.min.js"></script>
+
+<script src="/vendors/chartlist/Chart.min.js"></script>
+
+<script src="/vendors/count_up/jquery.counterup.min.js"></script>
+
+<script src="/vendors/swiper_slider/js/swiper.min.js"></script>
+
+<script src="/vendors/niceselect/js/jquery.nice-select.min.js"></script>
+
+<script src="/vendors/owl_carousel/js/owl.carousel.min.js"></script>
+
+<script src="/vendors/gijgo/gijgo.min.js"></script>
+
+<script src="/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="/vendors/datatable/js/dataTables.responsive.min.js"></script>
+<script src="/vendors/datatable/js/dataTables.buttons.min.js"></script>
+<script src="/vendors/datatable/js/buttons.flash.min.js"></script>
+<script src="/vendors/datatable/js/jszip.min.js"></script>
+<script src="/vendors/datatable/js/pdfmake.min.js"></script>
+<script src="/vendors/datatable/js/vfs_fonts.js"></script>
+<script src="/vendors/datatable/js/buttons.html5.min.js"></script>
+<script src="/vendors/datatable/js/buttons.print.min.js"></script>
+<script src="/js/chart.min.js"></script>
+
+<script src="/vendors/progressbar/jquery.barfiller.js"></script>
+
+<script src="/vendors/tagsinput/tagsinput.js"></script>
+
+<script src="/vendors/text_editor/summernote-bs4.js"></script>
+<script src="/vendors/apex_chart/apexcharts.js"></script>
+
+<script src="/js/custom.js"></script>
+
+<script src="/js/active_chart.js"></script>
+<script src="/vendors/apex_chart/radial_active.js"></script>
+<script src="/vendors/apex_chart/stackbar.js"></script>
+<script src="/vendors/apex_chart/area_chart.js"></script>
+
+<script src="/vendors/apex_chart/bar_active_1.js"></script>
+<script src="/vendors/chartjs/chartjs_active.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nouveau Client</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{saveClient}" th:object="${client}" method="POST">
+                    <input type="number" class="form-control" id="id" th:field="${client.code}" hidden>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Nom</label>
+                        <input type="text" class="form-control" th:field="${client.nom}" id="nom">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Prenom</label>
+                        <input type="text" class="form-control" th:field="${client.prenom}" id="prenom">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Email</label>
+                        <input type="email" class="form-control" th:field="${client.email}" id="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Numero</label>
+                        <input type="text" class="form-control" th:field="${client.numero}" id="numero">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Numero de CNI</label>
+                        <input type="text" class="form-control" th:field="${client.numeroCni}" id="numeroCNI">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i>Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+  
+
+</body>
+
+
+</html>
