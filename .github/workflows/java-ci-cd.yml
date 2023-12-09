@@ -15,17 +15,19 @@ jobs:
     steps:
       - name: Recuperation du code
         uses: actions/checkout@v2
+
       - name: Setup JDK
         uses: actions/setup-java@1
         with:
           distribution: 'oracle'
           java-version: '17'
           cache: maven
+
       - name: Installation des dependances
         run: mvn package
 
       - name: Build du projet
-        build: mvn clean install -X
+        run: mvn clean install -X
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
