@@ -18,8 +18,6 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: 23fevrier
           MYSQL_DATABASE: banque
-          MYSQL_USER: root
-          MYSQL_PASSWORD: 23fevrier
         ports:
           - 3306/tcp
 
