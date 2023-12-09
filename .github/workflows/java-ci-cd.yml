@@ -12,6 +12,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: latest
+        env:
+          MYSQL_ROOT_PASSWORD: 23fevrier
+          MYSQL_DATABASE: banque
+          MYSQL_USER: root
+          MYSQL_PASSWORD: 23fevrier
+        ports:
+          - 3306/tcp
+
+
     steps:
       - name: Recuperation du code
         uses: actions/checkout@v2
