@@ -19,7 +19,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: 23fevrier
           MYSQL_DATABASE: banque
         ports:
-          - 3306/tcp
+          - 3306: 3306
 
 
     steps:
